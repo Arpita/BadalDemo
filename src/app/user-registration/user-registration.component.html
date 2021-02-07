@@ -1,0 +1,110 @@
+<div class="container">
+    <div class=" justify-content-center">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">Input Appartment Details</div>
+                <div class="card-body">
+
+                    <form class="form-horizontal" [formGroup]="form" (ngSubmit)="userRegistation();">
+
+                        <div class="form-group">
+                            <label for="name" class="cols-sm-2 control-label">Appartment Name</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-building fa" aria-hidden="true"></i></span>
+                                    <input type="text" class="form-control" formControlName="name"  placeholder="Enter your Name" />
+                                </div>
+                            </div>
+                            <div class="errors" *ngIf="submitted && formCheck.name.errors">
+                                <div class="errors" *ngIf ="formCheck.name.errors.required">
+                                    *Please enter Appartment Name.
+                                </div>
+                                <div class="errors" *ngIf ="formCheck.name.errors.minlength || formCheck.name.errors.maxlength">
+                                    *Appartment Name should be between 2 to 45 characters long.
+                                </div>	
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="cols-sm-2 control-label">Number of blocks in appartment</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-square fa" aria-hidden="true"></i></span>
+                                    <input type="text" class="form-control" formControlName="noOfBlock" placeholder="Enter your number of blocks" (keypress)="numberOnly($event)"/>
+                                </div>
+                            </div>
+                            <div class="errors" *ngIf="submitted && formCheck.noOfBlock.errors">
+                                <div class="errors" *ngIf ="formCheck.noOfBlock.errors.required">
+                                    *Please enter number of Blocks.
+                                </div>
+                                <div class="errors" *ngIf ="formCheck.noOfBlock.errors.min">
+                                    *Number of blocks can not be 0.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="cols-sm-2 control-label">Number of towers in each block</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-building-o fa" aria-hidden="true"></i></span>
+                                    <input type="text" class="form-control" formControlName="noOfTower" placeholder="Enter your number of towers" (keypress)="numberOnly($event)" />
+                                </div>
+                            </div>
+                            <div class="errors" *ngIf="submitted && formCheck.noOfTower.errors">
+                                <div class="errors" *ngIf ="formCheck.noOfTower.errors.required">
+                                    *Please enter number of towers.
+                                </div>
+                                <div class="errors" *ngIf ="formCheck.noOfTower.errors.min">
+                                    *Number of towers can not be 0.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="cols-sm-2 control-label">Number of floor in each tower</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-building fa" aria-hidden="true"></i></span>
+                                    <input type="text" class="form-control" formControlName="noOfFloor" placeholder="Enter your number of floor" (keypress)="numberOnly($event)" />
+                                </div>
+                            </div>
+                            <div class="errors" *ngIf="submitted && formCheck.noOfFloor.errors">
+                                <div class="errors" *ngIf ="formCheck.noOfFloor.errors.required">
+                                    *Please enter number of floors.
+                                </div>
+                                <div class="errors" *ngIf ="formCheck.noOfFloor.errors.min">
+                                    *Number of floors can not be 0.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="cols-sm-2 control-label">Number of units in each floor</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-home fa" aria-hidden="true"></i></span>
+                                    <input type="text" class="form-control" formControlName="noOfUnit" placeholder="Enter your number of floor" (keypress)="numberOnly($event)" />
+                                </div>
+                            </div>
+                            <div class="errors" *ngIf="submitted && formCheck.noOfUnit.errors">
+                                <div class="errors" *ngIf ="formCheck.noOfUnit.errors.required">
+                                    *Please enter number of units.
+                                </div>
+                                <div class="errors" *ngIf ="formCheck.noOfUnit.errors.min">
+                                    *Number of units can not be 0.
+                                </div>
+                            </div>
+                        </div>
+                        
+
+
+                        <div class="form-group ">
+                            <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

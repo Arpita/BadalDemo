@@ -1,0 +1,80 @@
+<div class="limiter">
+        <div style="display:flex ;justify-content: flex-end; width: 100%;">
+            <div class="search-outer">
+                <input [(ngModel)]="search" id="search" class="search-box" placeholder="Search.." type="text" (keyup)="hitSearchFun()"><input class="search" type="button" (click)="searchFun()">
+            </div>
+        </div>
+     
+    <div class="container-table100" >
+        <div class="wrap-table100">
+                <div class="table" *ngIf="allData.length">
+
+                    <div class="row header">
+                        <div class="cell">
+                            S.No
+                        </div>
+                        <div class="cell">
+                            Unit Name
+                        </div>
+                        <div class="cell">
+                            Appartment Name
+                        </div>
+                        <div class="cell">
+                            Block Name
+                        </div>
+                        <div class="cell">
+                            Tower Name
+                        </div>
+                        <div class="cell">
+                            Status
+                        </div>
+                        <div class="cell">
+                            Actions
+                        </div>
+                    </div>
+
+                    <div class="row" *ngFor="let data of allData; let i = index">
+                        <div class="cell" data-title="S">
+                            {{(currentPage-1) *10 + 1 + i}}
+                        </div>
+                        <div class="cell" data-title="Name">
+                            {{(data?.name ? data?.name : '-')}}
+                        </div>
+                        <div class="cell" data-title="Appartment Name">
+                            {{(data?.appartmentName ? data?.appartmentName : '-')}}
+                        </div>
+                        <div class="cell" data-title="Appartment Name">
+                            {{(data?.blockName ? data?.blockName : '-')}}
+                        </div>
+                        <div class="cell" data-title="Appartment Name">
+                            {{(data?.towerName ? data?.towerName : '-')}}
+                        </div>
+                        <div class="cell" data-title="Status">
+                            <p class="status" *ngIf="data.status == 'available'" >Available</p>
+                            <p class="status sold"*ngIf="data.status == 'sold'" >Sold</p>
+                            <p class="status booked"*ngIf="data.status == 'booked'" >Booked</p>
+                        </div>
+                        <div class="cell" data-title="Status">
+                            <button class="button" *ngIf="data.status != 'available'" (click)="changeStatus('available',data._id)" >Available</button>
+                            <button class="button sold" *ngIf="data.status != 'sold'" (click)="changeStatus('sold',data._id)">Sold</button>
+                            <button class="button booked" *ngIf="data.status != 'booked'" (click)="changeStatus('booked',data._id)">Booked</button>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="!allData.length">
+                    <p class="norecordfound ">No Record Found !</p>
+                </div>
+        </div>
+      
+    </div>
+      <!-- pagination -->
+      <div class="new-pagination-wrapper" *ngIf="allData.length">
+        <div class="pagination-wrapper">
+            <pagination (pageChanged)="pageChanged($event)"  [boundaryLinks]="true"
+                [maxSize]="pagination.maxSize" [itemsPerPage]="pagination.limit" previousText="&lsaquo;"
+                nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [rotate]="true"
+                [totalItems]="pagination.totalItems">
+            </pagination>
+        </div>
+      </div>
+</div>
