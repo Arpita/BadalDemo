@@ -66,4 +66,17 @@ module.exports ={
 			})
 		});
 	},
+	deleteMany:async(model,condition)=>{
+		return new Promise((resolve, reject) => {
+			model.deleteMany(condition,(err,data)=>{
+				if(err){
+					console.log("error on delete many query================",err)
+					reject(err);
+				}
+				else{
+					resolve(data); 
+				}
+			})
+		});
+	},
 }

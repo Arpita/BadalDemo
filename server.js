@@ -195,7 +195,7 @@ app.get('/units', async (req, res) => {
         const schema = Joi.object().keys({
             page: Joi.number().default(1),
             limit: Joi.number().default(20),
-            search:Joi.string().optional(),
+            search:Joi.string().optional().allow(''),
         });
         let payload=await helper.verifyJoiSchema(req.query, schema);
         let {page,limit,search}=payload;
@@ -207,9 +207,13 @@ app.get('/units', async (req, res) => {
         let aggragte=[
             { "$match": condition},
             {"$skip": (parseInt(page)-1)*parseInt(limit)},{$limit: parseInt(limit) },
-            {"$lookup":{"from":"appartments","localField":"_id","foreignField":"customerId","as":"AppartmentInfo"}},
+            {"$lookup":{"from":"appartments","localField":"appartmentId","foreignField":"_id","as":"AppartmentInfo"}},
             {"$unwind": { "path": "$AppartmentInfo","preserveNullAndEmptyArrays": true }},
-            {"$project":{"_id":1,"name":1,"status":1,"appartmentName":"$AppartmentInfo.name"}},
+            {"$lookup":{"from":"blocks","localField":"blockId","foreignField":"_id","as":"BlockInfo"}},
+            {"$unwind": { "path": "$BlockInfo","preserveNullAndEmptyArrays": true }},
+            {"$lookup":{"from":"towers","localField":"towerId","foreignField":"_id","as":"TowerInfo"}},
+            {"$unwind": { "path": "$TowerInfo","preserveNullAndEmptyArrays": true }},
+            {"$project":{"_id":1,"name":1,"status":1,"appartmentName":"$AppartmentInfo.appartmentName","blockName":"$BlockInfo.name","towerName":"$TowerInfo.name"}},
         ];
           
         let [unit, count] = await Promise.all([
@@ -237,6 +241,22 @@ app.post('/changeStatus', async (req, res) => {
         };
         await Services.updateForAwait(unitModel,{ "_id": ObjectId(id) }, set, {});
         return res.send({message:'sucess'});
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(400).send({message:err,code:400});
+    } 
+})
+
+app.get('/clearDatabase', async (req, res) => {
+    try {
+        let [D1,D2,D3,D4] = await Promise.all([
+            Services.deleteMany(unitModel,{}),
+            Services.deleteMany(blockModel,{}),
+            Services.deleteMany(floorModel,{}),
+            Services.deleteMany(towerModel,{}),
+        ]);
+        return res.send({message:'sucess'});  
     }
     catch (err) {
         console.log(err);
